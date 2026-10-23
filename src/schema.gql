@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AuthPayloadType {
+  accessToken: String!
+  user: UserType!
+}
+
 input CreatePhaseInput {
   order: Int!
   projectId: ID!
@@ -16,11 +21,18 @@ input CreateProjectInput {
   title: String!
 }
 
+input LoginInput {
+  email: String!
+  password: String!
+}
+
 type Mutation {
   createPhase(input: CreatePhaseInput!): ID!
   createProject(input: CreateProjectInput!): ID!
   deletePhase(id: ID!): ID!
   deleteProject(id: ID!): ID!
+  login(input: LoginInput!): AuthPayloadType!
+  register(input: RegisterInput!): AuthPayloadType!
   updatePhase(input: UpdatePhaseInput!): ID!
   updateProject(input: UpdateProjectInput!): ID!
 }
@@ -95,6 +107,12 @@ type Query {
   projects(limit: Int = 10, priority: ProjectPriority, search: String, skip: Int = 0, status: ProjectStatus): ProjectPageType!
 }
 
+input RegisterInput {
+  email: String!
+  password: String!
+  tenantId: String!
+}
+
 input UpdatePhaseInput {
   id: ID!
   order: Int
@@ -109,4 +127,10 @@ input UpdateProjectInput {
   priority: ProjectPriority
   status: ProjectStatus
   title: String
+}
+
+type UserType {
+  email: String!
+  id: String!
+  tenantId: String!
 }
